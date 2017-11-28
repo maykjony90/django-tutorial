@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}Start a new topic{% endblock %}
+
+{% block breadcrumb %}
+	<li class="breadcrumb-item">
+		<a href="{% url 'home' %}">Boards</a>
+	</li>
+	<li class="breadcrumb-item">
+		<a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a>
+	</li>
+	<li class="breadcrumb-item active">New Topic</li>
+{% endblock%}
+
+{% block content %}
+	<!-- In the <form> tag, we have to define the method attribute. This instructs the browser on how we want to communicate with the server. The HTTP spec defines several request methods (verbs). But for the most part, we will only be using GET and POST request types. -->
+	<form method="post" novalidate>
+		<!-- Django protects all POST requests using a CSRF Token (Cross-Site Request Forgery Token). It’s a security measure to avoid external sites or applications to submit data to our application. Every time the application receives a POST, it will first look for the CSRF Token. If the request has no token, or the token is invalid, it will discard the posted data.
+		csrf_token -->
+		{% csrf_token %}
+
+		<!-- As the name suggests, the  include  is used to include HTML templates in another template. It’s a very useful way to reuse HTML components in a project. -->
+		{% include 'includes/form.html' %}
+
+		<button type="submit" class="btn btn-succes">Post</button>
+	</form>
+{% endblock %}
